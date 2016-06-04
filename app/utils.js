@@ -3,8 +3,8 @@
  */
 
 import httpStatus from 'http-status';
-import bcrypt from 'bcrypt-nodejs';
 import mung from 'express-mung';
+import uuid from 'uuid';
 
 // Wrap response into `error`
 export const sendError = (err, res, status) =>
@@ -15,8 +15,7 @@ export const sendData = (data, res, status) =>
   res.status(status || httpStatus.OK).json({data: data});
 
 // Function for generating hash based on time
-export const generateHash = () =>
-  bcrypt.hashSync(Date.now().toString(), bcrypt.genSaltSync(), null);
+export const generateHash = () => uuid();
 
 // Wrap response into `data`
 export const mungJson = mung.json((body) => {return {data: body}});
