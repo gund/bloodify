@@ -18,7 +18,10 @@ export const sendData = (data, res, status) =>
 export const generateHash = () => uuid();
 
 // Wrap response into `data`
-export const mungJson = mung.json((body) => {return {data: body}});
+export const mungJson = mung.json((body, req, res) => {
+  if (!body) res.status(httpStatus.NOT_FOUND);
+  return {data: body};
+});
 
 // Exception handling
-export const mungCustomError = () => mung.onError = (err, req, res) => sendError(err, res);
+export const mungCustomError = () => mung.onError = (err, req, res) => sendError(err, res, err.status);

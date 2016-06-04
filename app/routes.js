@@ -23,6 +23,8 @@ import recipeRoutes from './routes/_recipe.router.js';
 // Load API for `donor` component
 import donorRoutes from './routes/_donor.router';
 
+const API_PATH = '/api';
+
 export default (app, router, passport) => {
 
   // ### Express Middlware to use for all requests
@@ -74,8 +76,9 @@ export default (app, router, passport) => {
 
   donorRoutes(app, router);
 
-  // All of our routes will be prefixed with /api
-  app.use('/api', router);
+  // All of our routes will be prefixed with API_PATH
+  app.use(API_PATH, router);
+  app.API_PATH = API_PATH;
 
   // ### Frontend Routes
 

@@ -10,7 +10,7 @@
 // GET        /api/donor/:donor_id    Get a single donor item by donor item id
 // GET        /api/donor/link/:hash   Get donor by hash to edit/delete record
 // POST       /api/donor              Create a single donor item
-// DELETE     /api/donor/:donor_id    Delete a single donor item
+// DELETE     /api/donor/:donor_id    Delete a single donor item (Hash)
 // PUT        /api/donor/:donor_id    Update a donor item by id (Hash)
 
 import Donor from "../models/donor.model";
@@ -28,60 +28,46 @@ export default (app, router) => {
 
   router.route('/donor')
 
-  // Get all donors @ GET /api/donor
-    .get((req, res) => {
-      Donor.find((err, donors) => {
-        if (err) throw err;
-        res.json(donors);
-      });
-    })
+  // Get all donors @ GET API_PATH/donor
+    .get((req, res) => Donor.find(null, {hash: 0}, (err, donors) => res.json(donors)))
 
-    // Create new donor @ POST /api/donor
-    .post((req, res) => {
-      //noinspection JSUnresolvedVariable
-      Donor.create(req.body.donor, (err, donor) => {
-        if (err) throw err;
+    // Create new donor @ POST API_PATH/donor
+    .post((req, res, next) => {
+      Donor.create(req.body['donor'], (err, donor) => {
+        if (err) return next(err);
         res.json(donor);
       });
     });
 
   router.route('/donor/:donor_id')
 
-  // Get donor by id @ GET /api/donor:donor_id
-    .get((req, res) => {
-      //noinspection JSUnresolvedVariable
-      Donor.findOne(req.param.donor_id, (err, donor) => {
-        if (err) throw err;
-        res.json(donor);
-      });
-    })
+  // Get donor by id @ GET API_PATH/donor:donor_id
+    .get((req, res) => Donor.findById(req.params['donor_id'], {hash: 0}, (err, donor) => res.json(donor)))
 
     // Update donor by id (Hash) @ PUT /api/donor:donor_id
-    .put((req, res) => {
-      //noinspection JSUnresolvedVariable
-      Donor.findOne({hash: req.param.donor_id}, req.body.donor, {new: true}, (err, donor) => {
-        if (err) throw err;
+    .put((req, res, next) => {
+      // Prevent hash to be updated
+      if ('hash' in req.body['donor']) delete req.body['donor']['hash'];
+      Donor.findOneAndUpdate({hash: req.params['donor_id']}, req.body['donor'], {
+        new: true,
+        runValidators: true
+      }, (err, donor) => {
+        if (err) return next(err);
         res.json(donor);
       });
     })
 
-    // Delete donor by id @ DELETE /api/donor:donor_id
-    .delete((req, res) => {
-      //noinspection JSUnresolvedVariable
-      Donor.findByIdAndRemove(req.param.donor_id, (err) => {
-        if (err) throw err;
-        res.json('OK');
+    // Delete donor by id (Hash) @ DELETE API_PATH/donor:donor_id
+    .delete((req, res, next) => {
+      Donor.findOneAndRemove({hash: req.params['donor_id']}, (err, donor) => {
+        if (err) return next(err);
+        res.json(donor);
       });
     });
 
   router.route('/donor/link/:hash')
 
-  // Get donor by hash @ GET /api/donor/link/:hash
-    .get((req, res) => {
-      Donor.findOne({hash: req.param.hash}, (err, donor) => {
-        if (err) throw err;
-        res.json(donor);
-      });
-    });
+  // Get donor by hash @ GET API_PATH/donor/link/:hash
+    .get((req, res) => Donor.findOne({hash: req.params['hash']}, (err, donor) => res.json(donor)));
 
 };
