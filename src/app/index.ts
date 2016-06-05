@@ -21,15 +21,20 @@ import { RecipeService } from './recipes/recipe.service';
 import { recipes } from './recipes/recipes.reducer';
 import { selectedRecipe } from './recipes/selected-recipe.reducer';
 
+// Import files for Donors component
+import { DonorService } from './donor/donor.service';
+import { donors } from './donor/donors.reducer';
+
 // # Application Redux Stores
 //
 // ** Redux stores for use with our Angular 2 app **
 export const APP_STORES = [
   // These are the primary consumers of our app store
   RecipeService,
+  DonorService,
   // Inititialize app store available to entire app
   // and pass in our reducers.
   // Notice that we are passing in an object that matches the
   // `AppStore` interface
-  provideStore({recipes, selectedRecipe})
+  provideStore({recipes, selectedRecipe, donors})
 ];

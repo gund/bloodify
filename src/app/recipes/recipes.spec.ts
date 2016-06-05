@@ -1,6 +1,6 @@
-import {recipes} from './recipes.reducer';
+import { recipes } from './recipes.reducer';
 
-import {selectedRecipe} from './selected-recipe.reducer';
+import { selectedRecipe } from './selected-recipe.reducer';
 
 import {
   it,
@@ -25,8 +25,8 @@ describe('Recipes', () => {
 
   describe('`recipes` store', () => {
     let initialState = [
-      { _id: 0, name: 'First Recipe' },
-      { _id: 1, name: 'Second Recipe' }
+      {_id: 0, name: 'First Recipe'},
+      {_id: 1, name: 'Second Recipe'}
     ];
 
     it('returns an empty array by default', () => {
@@ -37,31 +37,31 @@ describe('Recipes', () => {
 
     it('`ADD_RECIPES`', () => {
       let payload = initialState,
-          stateItems = recipes([], {type: 'ADD_RECIPES', payload: payload});
+        stateItems = recipes([], {type: 'ADD_RECIPES', payload: payload});
 
       expect(stateItems).toEqual(payload);
     });
 
     it('`CREATE_RECIPE`', () => {
       let payload = {_id: 2, name: 'added recipe'},
-          result = [...initialState, payload],
-          stateItems = recipes(initialState, {type: 'CREATE_RECIPE', payload: payload});
+        result = [...initialState, payload],
+        stateItems = recipes(initialState, {type: 'CREATE_RECIPE', payload: payload});
 
       expect(stateItems).toEqual(result);
     });
 
     it('`UPDATE_RECIPE`', () => {
-      let payload = { _id: 1, name: 'Updated Recipe' },
-          result = [ initialState[0], { _id: 1, name: 'Updated Recipe' } ],
-          stateItems = recipes(initialState, {type: 'UPDATE_RECIPE', payload: payload});
+      let payload = {_id: 1, name: 'Updated Recipe'},
+        result = [initialState[0], {_id: 1, name: 'Updated Recipe'}],
+        stateItems = recipes(initialState, {type: 'UPDATE_RECIPE', payload: payload});
 
       expect(stateItems).toEqual(result);
     });
 
     it('`DELETE_RECIPE`', () => {
-      let payload = { _id: 0 },
-          result = [ initialState[1] ],
-          stateItems = recipes(initialState, {type: 'DELETE_RECIPE', payload: payload});
+      let payload = {_id: 0},
+        result = [initialState[1]],
+        stateItems = recipes(initialState, {type: 'DELETE_RECIPE', payload: payload});
 
       // DEBUG
       console.log('result: ');

@@ -29,7 +29,7 @@ export default (app, router) => {
   router.route('/donor')
 
   // Get all donors @ GET API_PATH/donor
-    .get((req, res) => Donor.find(null, {hash: 0}, (err, donors) => res.json(donors)))
+    .get((req, res) => Donor.find({}, {hash: 0}, (err, donors) => res.json(donors)))
 
     // Create new donor @ POST API_PATH/donor
     .post((req, res, next) => {

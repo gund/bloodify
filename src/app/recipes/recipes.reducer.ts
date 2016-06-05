@@ -6,7 +6,7 @@
 // ```
 
 // ** Import our `recipe` store
-import {Recipe} from './recipe.store';
+// import { Recipe } from './recipe.store';
 
 // # Redux reducer for `recipes`
 

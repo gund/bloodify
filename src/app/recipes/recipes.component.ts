@@ -43,7 +43,7 @@ export class Recipes {
     this.recipes = recipeService.recipes;
 
     // Bind the `selectedRecipe` observable from the store
-    this.selectedRecipe = store.select('selectedRecipe');
+    this.selectedRecipe = <Observable<Recipe>>store.select('selectedRecipe');
 
     // DEBUG
     this.selectedRecipe.subscribe(v => console.log(v));
