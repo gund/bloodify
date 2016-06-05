@@ -2,13 +2,9 @@
  * Created by alex on 6/4/16.
  */
 
-import { Donor } from './donor.store';
-
 // Redux reducer for Donors
 
-export const donors = (state: Donor[] = [], {type, payload}) => {
-  console.log('Donors reducer called: ', type);
-
+export const donors = (state: any = [], {type, payload}) => {
   switch (type) {
     case 'ADD_DONOR':
       return payload; // New income array
