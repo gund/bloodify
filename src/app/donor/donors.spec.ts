@@ -24,9 +24,9 @@ describe('Donors', () => {
       expect(defaultState).toEqual([]);
     });
 
-    it('`ADD_DONOR`', () => {
+    it('`ADD_DONORS`', () => {
       let payload = initialState,
-        stateItems = donors([], {type: 'ADD_DONOR', payload: payload});
+        stateItems = donors([], {type: 'ADD_DONORS', payload: payload});
 
       expect(stateItems).toEqual(payload);
     });

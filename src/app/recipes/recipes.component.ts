@@ -7,20 +7,19 @@
 
 // # Recipes Component
 
-import {Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy} from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-import {AppStore} from '../app.store';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { AppStore } from '../app.store';
 
-import {Recipe} from './recipe.store';
-import {RecipeService} from './recipe.service';
-import {RecipeDetails} from './recipe-details.component';
-import {RecipeList} from './recipe-list.component';
+import { Recipe } from './recipe.store';
+import { RecipeService } from './recipe.service';
+import { RecipeDetails } from './recipe-details.component';
+import { RecipeList } from './recipe-list.component';
 
 @Component({
   selector: 'recipes',

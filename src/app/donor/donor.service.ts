@@ -18,18 +18,12 @@ const HEADER = {
 };
 
 const toJson = JSON.stringify;
+const resToJsonData = (res: Response) => res.json().data;
+const payloadToAction = (action: string) => (payload) => ({type: action, payload});
 
 @Injectable()
 export class DonorService {
   donors: Observable<Donor[]>;
-
-  static resToJsonData(res: Response) {
-    return res.json().data;
-  }
-
-  static payloadToAction(action: string) {
-    return (payload) => ({type: action, payload});
-  }
 
   constructor(protected http: Http,
               protected store: Store<AppStore>) {
@@ -39,9 +33,9 @@ export class DonorService {
   loadDonors() {
     this.http
       .get(getApi('/donor'), HEADER)
-      .map(DonorService.resToJsonData)
-      .map(DonorService.payloadToAction('ADD_DONORS'))
-      .subscribe(this.dispatchAction);
+      .map(resToJsonData)
+      .map(payloadToAction('ADD_DONORS'))
+      .subscribe((action) => this.dispatchAction(action));
   }
 
   saveDonor(donor: Donor) {
@@ -51,8 +45,8 @@ export class DonorService {
   createDonor(donor: Donor) {
     this.http
       .post(getApi('/donor'), toJson({donor: donor}), HEADER)
-      .map(DonorService.resToJsonData)
-      .map(DonorService.payloadToAction('CREATE_DONOR'))
+      .map(resToJsonData)
+      .map(payloadToAction('CREATE_DONOR'))
       .subscribe(this.dispatchAction);
   }
 
@@ -60,17 +54,18 @@ export class DonorService {
     if (!donor.hash) return;
     this.http
       .put(getApi(`/donor/${donor.hash}`), toJson({donor: donor}), HEADER)
-      .subscribe(() => this.dispatchAction(DonorService.payloadToAction('UPDATE_DONOR')(donor)));
+      .subscribe(() => this.dispatchAction(payloadToAction('UPDATE_DONOR')(donor)));
   }
 
   deleteDonor(donor: Donor) {
     if (!donor.hash) return;
     this.http
       .delete(getApi(`/donor/${donor.hash}`))
-      .subscribe(() => this.dispatchAction(DonorService.payloadToAction('DELETE_DONOR')(donor)));
+      .subscribe(() => this.dispatchAction(payloadToAction('DELETE_DONOR')(donor)));
   }
 
   protected dispatchAction(action) {
+    console.log('dispatching...', action);
     this.store.dispatch(action);
   }
 }

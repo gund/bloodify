@@ -6,7 +6,7 @@
 
 export const donors = (state: any = [], {type, payload}) => {
   switch (type) {
-    case 'ADD_DONOR':
+    case 'ADD_DONORS':
       return payload; // New income array
 
     case 'CREATE_DONOR':
