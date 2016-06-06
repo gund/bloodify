@@ -136,7 +136,7 @@ module.exports = webpackMerge(commonConfig, {
       mangle: {
         screw_ie8: true,
         except: [
-            'App',
+            'AppComponent',
             'About',
             'Contact',
             'Home',

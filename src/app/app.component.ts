@@ -38,7 +38,7 @@ import { DonorsComponent } from './donor/donors.component';
   // es6-promise-loader and webpack `require`
   // {path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About')}
 ])
-export class App implements OnInit {
+export class AppComponent implements OnInit {
   name = 'Bloodify';
 
   constructor() {
