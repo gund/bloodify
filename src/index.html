@@ -55,9 +55,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <script type="text/javascript" id="fix-me">
+  //<% if (webpackConfig.metadata.ENV === 'development') { %>
   // Fix for WDS (src must be a string)
   document.getElementById('fix-me').src = '';
-
+  //<% } %>
   // Wrap our app startup in AMD module
   require([
     '/<%= htmlWebpackPlugin.files.js[0] %>',
