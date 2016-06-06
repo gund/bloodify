@@ -1,14 +1,16 @@
 {
   "globalDependencies": {
     "angular-protractor": "registry:dt/angular-protractor#1.5.0+20160425143459",
+    "angular2-beta-to-rc-alias": "file:./node_modules/@angularclass/angular2-beta-to-rc-alias/src/beta-17/typings.d.ts",
+    "arcgis-js-api": "github:Esri/jsapi-resources/4.x/typescript/arcgis-js-api.d.ts#d142a2785af86f61e157ea48973a280582dea97c",
     "core-js": "registry:dt/core-js#0.0.0+20160317120654",
+    "dojo": "registry:dt/dojo#1.9.0+20160521151917",
     "hammerjs": "registry:dt/hammerjs#2.0.4+20160417130828",
     "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
     "node": "registry:dt/node#6.0.0+20160514165920",
     "selenium-webdriver": "registry:dt/selenium-webdriver#2.44.0+20160317120654",
     "source-map": "registry:dt/source-map#0.0.0+20160317120654",
     "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526",
-    "webpack": "registry:dt/webpack#1.12.9+20160321060707",
-    "angular2-beta-to-rc-alias": "file:./node_modules/@angularclass/angular2-beta-to-rc-alias/src/beta-17/typings.d.ts"
+    "webpack": "registry:dt/webpack#1.12.9+20160321060707"
   }
 }

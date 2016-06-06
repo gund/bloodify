@@ -11,6 +11,8 @@ var helpers = require('./helpers');
 var CopyWebpackPlugin = (CopyWebpackPlugin = require('copy-webpack-plugin'), CopyWebpackPlugin.default || CopyWebpackPlugin);
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 
 //# Webpack Constants
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
@@ -205,6 +207,13 @@ module.exports = {
       to: 'assets'
     }]),
 
+    new ManifestPlugin(),
+
+    new ChunkManifestPlugin({
+      filename: "manifest.json",
+      manifestVariable: "webpackManifest"
+    }),
+
     // Plugin: HtmlWebpackPlugin
     // Description: Simplifies creation of HTML files to serve your webpack bundles.
     // This is especially useful for webpack bundles that include a hash in the filename
@@ -213,7 +222,8 @@ module.exports = {
     // See: https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       template: 'src/index.html',
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'dependency',
+      inject: false
     })
 
   ],
@@ -228,5 +238,17 @@ module.exports = {
     module: false,
     clearImmediate: false,
     setImmediate: false
-  }
+  },
+  externals: [
+    function(context, request, callback) {
+      if (/^dojo/.test(request) ||
+        /^dojox/.test(request) ||
+        /^dijit/.test(request) ||
+        /^esri/.test(request)
+      ) {
+        return callback(null, "amd " + request);
+      }
+      callback();
+    }
+  ]
 };

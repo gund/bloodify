@@ -67,7 +67,8 @@ module.exports = webpackMerge(commonConfig, {
     // inside the output.path directory.
     //
     // See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
-    chunkFilename: '[id].chunk.js'
+    chunkFilename: '[id].chunk.js',
+    libraryTarget: "amd"
   },
 
   // Add additional plugins to the compiler.

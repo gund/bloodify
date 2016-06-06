@@ -9,7 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="<%= webpackConfig.metadata.title %>">
   <!-- load the latest and greatest Bootstrap 3 styles -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
   <!-- use http://www.favicon-generator.org/ to replace files in public/icon-->
   <link rel="apple-touch-icon" sizes="57x57" href="/assets/icon/apple-icon-57x57.png">
@@ -21,7 +22,7 @@
   <link rel="apple-touch-icon" sizes="144x144" href="/assets/icon/apple-icon-144x144.png">
   <link rel="apple-touch-icon" sizes="152x152" href="/assets/icon/apple-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon/android-icon-192x192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/icon/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/icon/favicon-16x16.png">
@@ -38,16 +39,39 @@
 
 <body>
 
-  <app>
-    Loading...
-  </app>
+<app>
+  Loading...
+</app>
 
-  <% if (webpackConfig.metadata.ENV === 'development') { %>
-  <!-- Webpack Dev Server reload -->
-  <script src="/webpack-dev-server.js"></script>
-  <% } %>
+<!-- Load Esri lib -->
+<link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
+<script src="//js.arcgis.com/4.0/"></script>
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<% if (webpackConfig.metadata.ENV === 'development') { %>
+<!-- Webpack Dev Server reload -->
+<script src="/webpack-dev-server.js"></script>
+<% } %>
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script type="text/javascript" id="fix-me">
+  // Fix for WDS (src must be a string)
+  document.getElementById('fix-me').src = '';
+
+  // Wrap our app startup in AMD module
+  require([
+    '/<%= htmlWebpackPlugin.files.js[0] %>',
+    '/<%= htmlWebpackPlugin.files.js[1] %>',
+    '/<%= htmlWebpackPlugin.files.js[2] %>'
+  ],
+    function (polyfills, vendor, boot) {
+      //    boot.main();
+      // Do not call boot.main() manually, instead
+      // Fire up DOMContentLoaded again to bootstrap main application
+      var DOMContentLoaded_event = document.createEvent("Event");
+      DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+      window.document.dispatchEvent(DOMContentLoaded_event);
+    });
+</script>
 </body>
 </html>

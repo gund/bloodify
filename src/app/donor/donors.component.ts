@@ -10,6 +10,8 @@ import { Observable } from 'rxjs/Observable';
 import { Donor } from './donor.store';
 import { DonorService } from './donor.service';
 
+let Map = require('esri/Map');
+
 @Component({
   selector: 'bdfy-donors',
   providers: [],
@@ -25,5 +27,8 @@ export class DonorsComponent implements OnInit {
 
   ngOnInit(): any {
     this.donorService.loadDonors();
+
+    let map = new Map('content', {basemap: 'streets'});
+    console.log('Map', map);
   }
 }
