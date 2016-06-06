@@ -21,21 +21,19 @@ export class MapComponent<Pins> implements OnInit, AfterViewInit {
 
   @Input() pins: Observable<Pins>;
   @Output() pinSelected = new EventEmitter<Pins>();
-  @Output() positionChanged = new EventEmitter();
+  @Output() positionChanged = new EventEmitter<__esri.Extent>();
+  @Output() clicked = new EventEmitter<any>();
 
   mapId: string;
-  map: __esri.Map;
-  view: __esri.MapView;
-  graphicsLayer: __esri.GraphicsLayer;
-  locateBtn: __esri.Locate;
-  searchBox: __esri.Search;
 
   constructor(protected mapService: MapService) {
-    this.mapId = MAP_CLASS + (MapComponent.mapsCount++).toString();
+    this.mapId = `${MAP_CLASS}-${MapComponent.mapsCount++}`;
   }
 
   ngOnInit(): any {
-    this.mapService.click.subscribe(e => console.log(e));
+    // Transfer events from map service to outputs
+    this.mapService.click.subscribe(e => this.clicked.emit(e));
+    this.mapService.positionChange.subscribe(e => this.positionChanged.emit(e));
   }
 
   ngAfterViewInit(): any {

@@ -28,4 +28,12 @@ export class DonorsComponent implements OnInit {
   ngOnInit(): any {
     this.donorService.loadDonors();
   }
+
+  onClick(e) {
+    console.log('click', e);
+  }
+
+  onPositionChange(e) {
+    console.log('position', e);
+  }
 }

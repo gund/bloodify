@@ -18,7 +18,8 @@ export class MapService {
   locateBtn: __esri.Locate;
   searchBox: __esri.Search;
 
-  click = new EventEmitter();
+  click = new EventEmitter<any>();
+  positionChange = new EventEmitter<__esri.Extent>();
 
   protected _locateEnabled = false;
   protected _locateOnInit = false;
@@ -65,6 +66,7 @@ export class MapService {
   protected viewDidInit() {
     // Bind to events
     this.view.on('click', e => this.click.emit(e));
+    this.view.watch('extent', e => this.positionChange.emit(e));
 
     if (this._locateEnabled && this._locateOnInit) this.locateBtn.locate();
   }
