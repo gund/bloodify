@@ -11,6 +11,7 @@ const AGS_MAP = require('esri/Map');
 const AGS_MAP_VIEW = require('esri/views/MapView');
 const AGS_GRAPH_LAYER = require('esri/layers/GraphicsLayer');
 const AGS_LOCATE_WID = require('esri/widgets/Locate');
+const AGS_SEARCH_WID = require('esri/widgets/Search');
 
 const MAP_CLASS = 'bdfy-map';
 
@@ -25,7 +26,10 @@ export class MapComponent<Pins> implements OnInit, AfterViewInit {
   @Input() basemap = 'streets';
   @Input() maxZoom = 20;
   @Input() minZoom = 2;
+  @Input() locateEnabled = true;
   @Input() locatePosition = 'top-left';
+  @Input() searchEnabled = true;
+  @Input() searchPosition = 'top-left';
   @Input() pins: Observable<Pins>;
   @Output() pinSelected = new EventEmitter<Pins>();
   @Output() positionChanged = new EventEmitter();
@@ -35,6 +39,7 @@ export class MapComponent<Pins> implements OnInit, AfterViewInit {
   view: __esri.MapView;
   graphicsLayer: __esri.GraphicsLayer;
   locateBtn: __esri.Locate;
+  searchBox: __esri.Search;
 
   constructor() {
     this.mapId = MAP_CLASS + (MapComponent.mapCount++).toString();
@@ -47,11 +52,12 @@ export class MapComponent<Pins> implements OnInit, AfterViewInit {
     this.initMap();
     this.initView();
     this.initGraphicsLayer();
-    this.initLocateBtn();
+    if (this.locateEnabled) this.initLocateBtn();
+    if (this.searchEnabled) this.initSearchBox();
   }
 
-  mapDidInit() {
-    this.locateBtn.locate();
+  viewDidInit() {
+    if (this.locateEnabled) this.locateBtn.locate();
   }
 
   initMap() {
@@ -71,7 +77,7 @@ export class MapComponent<Pins> implements OnInit, AfterViewInit {
       }
     });
 
-    this.view.then(() => this.mapDidInit());
+    this.view.then(() => this.viewDidInit());
   }
 
   initGraphicsLayer() {
@@ -87,6 +93,16 @@ export class MapComponent<Pins> implements OnInit, AfterViewInit {
     this.locateBtn.startup();
     this.view.ui.add(this.locateBtn, {
       position: this.locatePosition,
+      index: 1
+    });
+  }
+
+  initSearchBox() {
+    this.searchBox = new AGS_SEARCH_WID({
+      view: this.view
+    });
+    this.view.ui.add(this.searchBox, {
+      position: this.searchPosition,
       index: 0
     });
   }
