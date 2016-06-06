@@ -9,10 +9,12 @@ import { Observable } from 'rxjs/Observable';
 
 import { Donor } from './donor.store';
 import { DonorService } from './donor.service';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'bdfy-donors',
   providers: [],
+  directives: [MapComponent],
   template: require('./donors.html')
 })
 export class DonorsComponent implements OnInit {

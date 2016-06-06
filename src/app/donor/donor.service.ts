@@ -65,7 +65,6 @@ export class DonorService {
   }
 
   protected dispatchAction(action) {
-    console.log('dispatching...', action);
     this.store.dispatch(action);
   }
 }
