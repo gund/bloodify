@@ -2,7 +2,7 @@
  * Created by alex on 6/6/16.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 const AGS_MAP = require('esri/Map');
 const AGS_MAP_VIEW = require('esri/views/MapView');
@@ -17,6 +17,8 @@ export class MapService {
   graphicsLayer: __esri.GraphicsLayer;
   locateBtn: __esri.Locate;
   searchBox: __esri.Search;
+
+  click = new EventEmitter();
 
   protected _locateEnabled = false;
   protected _locateOnInit = false;
@@ -61,6 +63,9 @@ export class MapService {
   }
 
   protected viewDidInit() {
+    // Bind to events
+    this.view.on('click', e => this.click.emit(e));
+
     if (this._locateEnabled && this._locateOnInit) this.locateBtn.locate();
   }
 

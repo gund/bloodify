@@ -35,6 +35,7 @@ export class MapComponent<Pins> implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): any {
+    this.mapService.click.subscribe(e => console.log(e));
   }
 
   ngAfterViewInit(): any {
