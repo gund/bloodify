@@ -1,1 +1,2 @@
-<bdfy-map [pins]="donors" (clicked)="onClick($event)" (positionChanged)="onPositionChange($event)"></bdfy-map>
+<bdfy-map [pins]="donors" (clicked)="onMapClick($event)" (positionChanged)="onMapPositionChange($event)"></bdfy-map>
+<bdfy-new-donor [coords]="tempCoords" [show]="showNewDonorPopup"></bdfy-new-donor>

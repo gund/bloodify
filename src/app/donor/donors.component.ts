@@ -5,20 +5,23 @@
 import {
   Component, OnInit
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, BehaviorSubject } from 'rxjs/Rx';
 
-import { Donor } from './donor.store';
+import { Donor, Coords } from './donor.store';
 import { DonorService } from './donor.service';
 import { MapComponent } from '../map/map.component';
+import { NewDonorComponent } from './new-donor.component';
 
 @Component({
   selector: 'bdfy-donors',
   providers: [],
-  directives: [MapComponent],
+  directives: [MapComponent, NewDonorComponent],
   template: require('./donors.html')
 })
 export class DonorsComponent implements OnInit {
+  showNewDonorPopup = new BehaviorSubject(false);
   donors: Observable<Donor[]>;
+  tempCoords: Coords;
 
   constructor(protected donorService: DonorService) {
     // Bind to donors observable
@@ -29,11 +32,13 @@ export class DonorsComponent implements OnInit {
     this.donorService.loadDonors();
   }
 
-  onClick(e) {
-    console.log('click', e);
+  onMapClick(e) {
+    console.log(e);
+    this.tempCoords = {lat: e.mapPoint.latitude.toPrecision(9), lng: e.mapPoint.longitude.toPrecision(9)};
+    this.showNewDonorPopup.next(true);
   }
 
-  onPositionChange(e) {
+  onMapPositionChange(e) {
     console.log('position', e);
   }
 }

@@ -3,7 +3,7 @@
  */
 
 export interface Donor {
-  _id: string;
+  _id?: string;
   firstName: string;
   lastName: string;
   number: number;
@@ -27,3 +27,14 @@ export interface Coords {
   lat: string;
   lng: string;
 }
+
+export const createDonor = (coord?: Coords): Donor => ({
+  firstName: '',
+  lastName: '',
+  number: null,
+  email: '',
+  blood: {type: 'O', rh: '+'},
+  address: '',
+  coord: coord || {lat: '', lng: ''},
+  ip: ''
+});

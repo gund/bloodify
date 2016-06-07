@@ -3,7 +3,7 @@
  */
 
 import {
-  Component, OnInit, Input, Output, EventEmitter, AfterViewInit
+  Component, Input, Output, EventEmitter, AfterViewInit
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -16,24 +16,22 @@ const MAP_CLASS = 'bdfy-map';
   providers: [MapService], // MapService instance per component
   template: `<div id="{{ mapId }}" class="${MAP_CLASS}"></div>`
 })
-export class MapComponent<Pins> implements OnInit, AfterViewInit {
+export class MapComponent<Pins> implements AfterViewInit {
   static mapsCount = 0;
 
   @Input() pins: Observable<Pins>;
   @Output() pinSelected = new EventEmitter<Pins>();
-  @Output() positionChanged = new EventEmitter<__esri.Extent>();
-  @Output() clicked = new EventEmitter<any>();
+  @Output() positionChanged: EventEmitter<__esri.Extent>;
+  @Output() clicked: EventEmitter<any>;
 
   mapId: string;
 
   constructor(protected mapService: MapService) {
     this.mapId = `${MAP_CLASS}-${MapComponent.mapsCount++}`;
-  }
 
-  ngOnInit(): any {
     // Transfer events from map service to outputs
-    this.mapService.click.subscribe(e => this.clicked.emit(e));
-    this.mapService.positionChange.subscribe(e => this.positionChanged.emit(e));
+    this.clicked = this.mapService.click;
+    this.positionChanged = this.mapService.positionChange;
   }
 
   ngAfterViewInit(): any {

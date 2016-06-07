@@ -78,12 +78,9 @@
       true,
       "spaces"
     ],
-    "max-line-length": [
-      true,
-      100
-    ],
+    "max-line-length": false,
     "no-require-imports": false,
-    "no-trailing-whitespace": true,
+    "no-trailing-whitespace": false,
     "object-literal-sort-keys": false,
     "trailing-comma": [
       true,
@@ -95,10 +92,7 @@
 
     "align": false,
     "class-name": true,
-    "comment-format": [
-      true,
-      "check-space"
-    ],
+    "comment-format": false,
     "interface-name": false,
     "jsdoc-format": true,
     "no-consecutive-blank-lines": false,
@@ -107,7 +101,6 @@
       true,
       "check-open-brace",
       "check-catch",
-      "check-else",
       "check-finally",
       "check-whitespace"
     ],

@@ -33,9 +33,11 @@ export default (app, router) => {
 
     // Create new donor @ POST API_PATH/donor
     .post((req, res, next) => {
-      Donor.create(req.body['donor'], (err, donor) => {
+      let donor = req.body['donor'];
+      donor.ip = req.ip;
+      Donor.create(donor, (err, donor_) => {
         if (err) return next(err);
-        res.json(donor);
+        res.json(donor_);
       });
     });
 
@@ -46,9 +48,11 @@ export default (app, router) => {
 
     // Update donor by id (Hash) @ PUT /api/donor:donor_id
     .put((req, res, next) => {
+      let donor = req.body['donor'];
+      donor.ip = req.ip;
       // Prevent hash to be updated
-      if ('hash' in req.body['donor']) delete req.body['donor']['hash'];
-      Donor.findOneAndUpdate({hash: req.params['donor_id']}, req.body['donor'], {
+      if ('hash' in donor) delete donor['hash'];
+      Donor.findOneAndUpdate({hash: req.params['donor_id']}, donor, {
         new: true,
         runValidators: true
       }, (err, donor) => {

@@ -1,8 +1,9 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { RouteConfig } from '@angular/router-deprecated';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { RouteConfig, Router } from '@angular/router-deprecated';
 
 import { RouterActive } from './shared/directives/router-active/router-active.directive';
 import { DonorsComponent } from './donor/donors.component';
+import { EditDonorComponent } from './donor/edit-donor.component';
 
 @Component({
   selector: 'app',
@@ -19,8 +20,8 @@ import { DonorsComponent } from './donor/donors.component';
       <md-toolbar color="primary">
           <span>{{ name }}</span>
           <span class="fill"></span>
-          <button md-button router-active [routerLink]=" ['Donors'] ">
-            Index
+          <button *ngIf="!isIndexPage" md-button router-active [routerLink]=" ['Donors'] ">
+            Map
           </button>
       </md-toolbar>
 
@@ -29,7 +30,17 @@ import { DonorsComponent } from './donor/donors.component';
   `
 })
 @RouteConfig([
-  {path: '/', name: 'Donors', component: DonorsComponent, useAsDefault: true}
+  {
+    path: '/',
+    name: 'Donors',
+    component: DonorsComponent,
+    useAsDefault: true
+  },
+  {
+    path: '/edit/:hash',
+    name: 'Edit',
+    component: EditDonorComponent
+  }
   // {path: '/', name: 'Index', component: Home, useAsDefault: true},
   // {path: '/home', name: 'Home', component: Home},
   // {path: '/todo', component: Todo, name: 'Todo'},
@@ -38,12 +49,15 @@ import { DonorsComponent } from './donor/donors.component';
   // es6-promise-loader and webpack `require`
   // {path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About')}
 ])
-export class AppComponent implements OnInit {
+export class AppComponent {
   name = 'Bloodify';
+  isIndexPage: boolean;
 
-  constructor() {
+  constructor(protected router: Router) {
+    router.subscribe(() => this.checkIndexPage());
   }
 
-  ngOnInit() {
+  checkIndexPage() {
+    this.isIndexPage = this.router.isRouteActive(this.router.generate(['/Donors']));
   }
 }

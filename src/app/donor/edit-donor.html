@@ -1,0 +1,6 @@
+<div class="edit-donor" *ngIf="isLoading">
+  <p></p>
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
+  <p></p>
+</div>
+<bdfy-new-donor [useDonor]="donor" [coords]="coords" [show]="showNewDonorPopup"></bdfy-new-donor>

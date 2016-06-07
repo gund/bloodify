@@ -1,0 +1,18 @@
+<template [ngIf]="visible | async">
+  <div class="popup modal fade in" (click)="close()">
+    <div class="modal-dialog modal-lg" (click)="$event.stopPropagation()">
+      <md-card>
+        <md-card-title>
+          <ng-content select="bdfy-popup-title"></ng-content>
+        </md-card-title>
+        <md-card-content>
+          <ng-content select="bdfy-popup-content"></ng-content>
+        </md-card-content>
+        <md-card-actions>
+          <ng-content select="bdfy-popup-actions"></ng-content>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </div>
+  <div class="modal-backdrop fade in"></div>
+</template>

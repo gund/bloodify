@@ -5,3 +5,15 @@ bdfy-donors {
   left: 0;
   right: 0;
 }
+
+bdfy-new-donor {
+  .new-donor {
+    md-input {
+      width: 100%;
+    }
+
+    md-card-actions {
+      margin-bottom: -27px;
+    }
+  }
+}

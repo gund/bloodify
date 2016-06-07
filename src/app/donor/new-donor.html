@@ -1,0 +1,74 @@
+<bdfy-popup class="new-donor" [visible]="showPopup">
+  <bdfy-popup-title>
+    <template [ngIf]="!isEditing">Add Donor</template>
+    <template [ngIf]="isEditing">Edit Donor</template>
+  </bdfy-popup-title>
+  <bdfy-popup-content>
+    <div *ngIf="!isSaved">
+      <form #donorForm="ngForm" (submit)="submit()" *ngIf="donorFormActive">
+        <md-input [(ngModel)]="newDonor.firstName" ngControl="firstName" placeholder="First Name" required=""
+                  #firstName="ngForm"></md-input>
+        <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+          First Name is required
+        </div>
+
+        <md-input [(ngModel)]="newDonor.lastName" ngControl="lastName" placeholder="Last Name" required=""
+                  #lastName="ngForm"></md-input>
+        <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+          Last Name is required
+        </div>
+
+        <md-input [(ngModel)]="newDonor.number" ngControl="number" type="tel" [attr.pattern]="phoneRegex"
+                  placeholder="Contact Number (ex. +00 111 2222 333)" required="" #number="ngForm"></md-input>
+        <div [hidden]="number.valid || number.pristine" class="alert alert-danger">
+          Phone invalid
+        </div>
+
+        <md-input [(ngModel)]="newDonor.email" ngControl="email" type="email" placeholder="Email Address"
+                  required="" #email="ngForm" [attr.pattern]="emailRegex"></md-input>
+        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+          Email invalid
+        </div>
+
+        <p></p>
+        <p>Blood Type:</p>
+        <md-radio-group [(ngModel)]="newDonor.blood.type">
+          <md-radio-button value="O">O</md-radio-button>
+          <md-radio-button value="A">A</md-radio-button>
+          <md-radio-button value="B">B</md-radio-button>
+          <md-radio-button value="AB">AB</md-radio-button>
+        </md-radio-group>
+
+        <p></p>
+        <p>Blood Rhesus:</p>
+        <md-radio-group [(ngModel)]="newDonor.blood.rh">
+          <md-radio-button value="-">-</md-radio-button>
+          <md-radio-button value="+">+</md-radio-button>
+        </md-radio-group>
+
+        <div class="new-donor-loader" *ngIf="isSaving">
+          <p></p>
+          <md-progress-bar mode="indeterminate"></md-progress-bar>
+          <p></p>
+        </div>
+
+        <md-card-actions align="end">
+          <button md-button color="primary" (click)="closePopup()">Cancel</button>
+          <button md-raised-button color="primary" type="submit" [disabled]="!donorForm.form.valid">Save</button>
+        </md-card-actions>
+      </form>
+    </div>
+    <div *ngIf="isSaved">
+      <md-card>
+        <md-card-title>Success!</md-card-title>
+        <md-card-subtitle>
+          You can edit your info via <a [routerLink]="['/Edit', {hash: createdHash}]">this link</a>
+        </md-card-subtitle>
+      </md-card>
+
+      <md-card-actions align="end">
+        <button md-button color="primary" (click)="closePopup()">Close</button>
+      </md-card-actions>
+    </div>
+  </bdfy-popup-content>
+</bdfy-popup>

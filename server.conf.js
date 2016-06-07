@@ -72,6 +72,8 @@ import passportConf from './config/passport.conf.js';
 // Pass Passport configuration our PassportJS instance
 passportConf(passport);
 
+app.enable('trust proxy');
+
 if (process.env.NODE_ENV === 'development' ||
     process.env.NODE_ENV === 'test')
   // Log every request to the console

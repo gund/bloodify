@@ -32,7 +32,7 @@ export class MapService {
     return this;
   }
 
-  withSearchBox(position = 'top-left', index = 0) {
+  withSearchBox(position = 'top-right', index = 0) {
     this.searchBox = new AGS_SEARCH_WID({
       view: this.view
     });
