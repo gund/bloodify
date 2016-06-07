@@ -19,6 +19,7 @@ import { DonorService } from './donor.service';
 export class NewDonorComponent implements OnInit {
   @Input() show: BehaviorSubject<boolean>;
   @Input() coords: Coords;
+  @Input() address: string;
   @Input() useDonor = new BehaviorSubject(null);
   @Output() donorAdd = new EventEmitter<Donor>();
   @Output() donorAdded = new EventEmitter<Donor>();
@@ -67,7 +68,7 @@ export class NewDonorComponent implements OnInit {
 
   submit() {
     this.newDonor.coord = this.coords;
-    this.newDonor.address = 'Fake';
+    this.newDonor.address = this.address;
 
     this.isSaving = true;
 

@@ -9,6 +9,9 @@ const AGS_MAP_VIEW = require('esri/views/MapView');
 const AGS_GRAPH_LAYER = require('esri/layers/GraphicsLayer');
 const AGS_LOCATE_WID = require('esri/widgets/Locate');
 const AGS_SEARCH_WID = require('esri/widgets/Search');
+const AGS_LOCATOR_TASK = require('esri/tasks/Locator');
+
+const GEOCODE_URL = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer';
 
 @Injectable()
 export class MapService {
@@ -17,9 +20,11 @@ export class MapService {
   graphicsLayer: __esri.GraphicsLayer;
   locateBtn: __esri.Locate;
   searchBox: __esri.Search;
+  locator: __esri.Locator = new AGS_LOCATOR_TASK({url: GEOCODE_URL});
 
   click = new EventEmitter<any>();
   positionChange = new EventEmitter<__esri.Extent>();
+  locationFound = new EventEmitter<any>();
 
   protected _locateEnabled = false;
   protected _locateOnInit = false;
@@ -61,6 +66,10 @@ export class MapService {
 
   locateOnInit() {
     this._locateOnInit = true;
+  }
+
+  locationToAddress(mapPoint) {
+    return this.locator.locationToAddress(mapPoint, 100);
   }
 
   protected viewDidInit() {

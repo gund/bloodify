@@ -21,6 +21,7 @@ import { NewDonorComponent } from './new-donor.component';
 export class EditDonorComponent implements OnInit {
   showNewDonorPopup = new BehaviorSubject(false);
   coords: Coords;
+  address: string;
   donor = new BehaviorSubject(null);
   hash: string;
   isLoading = true;
@@ -36,8 +37,10 @@ export class EditDonorComponent implements OnInit {
 
   ngOnInit(): any {
     this.donorService.loadDonorByHash(this.hash).then(
-      donor => {
+      (donor: Donor) => {
         this.isLoading = false;
+        this.coords = donor.coord;
+        this.address = donor.address;
         this.donor.next(donor);
         this.showNewDonorPopup.next(true);
       },
