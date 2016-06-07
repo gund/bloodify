@@ -10,6 +10,7 @@ const AGS_GRAPH_LAYER = require('esri/layers/GraphicsLayer');
 const AGS_LOCATE_WID = require('esri/widgets/Locate');
 const AGS_SEARCH_WID = require('esri/widgets/Search');
 const AGS_LOCATOR_TASK = require('esri/tasks/Locator');
+const AGS_WEBMERCATOR: __esri.webMercatorUtils = require('esri/geometry/support/webMercatorUtils');
 
 const GEOCODE_URL = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer';
 
@@ -24,10 +25,14 @@ export class MapService {
 
   click = new EventEmitter<any>();
   positionChange = new EventEmitter<__esri.Extent>();
-  locationFound = new EventEmitter<any>();
+  viewInit = new EventEmitter<__esri.MapView>();
 
   protected _locateEnabled = false;
   protected _locateOnInit = false;
+
+  static xyToLatLng(x: number, y: number) {
+    return AGS_WEBMERCATOR.xyToLngLat(x, y);
+  }
 
   initialize(options: MapServiceOptions) {
     this.initMap(options.basemap);
@@ -78,6 +83,8 @@ export class MapService {
     this.view.watch('extent', e => this.positionChange.emit(e));
 
     if (this._locateEnabled && this._locateOnInit) this.locateBtn.locate();
+
+    this.viewInit.emit(this.view);
   }
 
   protected initMap(basemap = 'streets') {

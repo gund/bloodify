@@ -7,7 +7,7 @@ import { EventEmitter } from '@angular/compiler/src/facade/async';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { PopupComponent } from '../popup/popup.component';
-import { Donor, createDonor, Coords } from './donor.store';
+import { Donor, createDonor } from './donor.store';
 import { DonorService } from './donor.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { DonorService } from './donor.service';
 })
 export class NewDonorComponent implements OnInit {
   @Input() show: BehaviorSubject<boolean>;
-  @Input() coords: Coords;
+  @Input() coords: number[];
   @Input() address: string;
   @Input() useDonor = new BehaviorSubject(null);
   @Output() donorAdd = new EventEmitter<Donor>();

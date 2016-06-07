@@ -40,6 +40,19 @@ export class DonorService {
     return obs.toPromise();
   }
 
+  loadDonorsFor(lng1: number, lat1: number,
+                lng2: number, lat2: number,
+                lng3: number, lat3: number,
+                lng4: number, lat4: number) {
+    let obs = this.http
+      .get(getApi(`/donor/lng1/${lng1}/lat1/${lat1}/lng2/${lng2}/lat2/${lat2}/lng3/${lng3}/lat3/${lat3}/lng4/${lng4}/lat4/${lat4}/`), HEADER)
+      .map(resToJsonData);
+    obs
+      .map(payloadToAction('ADD_DONORS'))
+      .subscribe(action => this.dispatchAction(action));
+    return obs.toPromise();
+  }
+
   loadDonorByHash(hash: string) {
     let obs = this.http
       .get(getApi(`/donor/link/${hash}`))

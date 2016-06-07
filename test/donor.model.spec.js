@@ -36,8 +36,7 @@ describe('Donor: models', () => {
     invalidateDonorProp(donorToken, 'number', '0438544323');
     invalidateDonorProp(donorToken, 'blood', {type: 'Z', rh: '+'}, 'blood\\.type');
     invalidateDonorProp(donorToken, 'blood', {type: 'A', rh: '*'}, 'blood\\.rh');
-    invalidateDonorProp(donorToken, 'coord', {lat: '12.34567890', lng: '12.3456789'}, 'coord\\.lat');
-    invalidateDonorProp(donorToken, 'coord', {lat: '12.3456789', lng: '12.34567890'}, 'coord\\.lng');
+    // invalidateDonorProp(donorToken, 'coord', [12.34567890, 12.3456789]);
 
   });
 

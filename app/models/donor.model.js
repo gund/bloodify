@@ -31,15 +31,12 @@ let donorSchema = new mongoose.Schema({
 
   // Coordinates
   address: {type: String, required: true, maxlength: ADDRESS_MAX_LENGTH},
-  coord: {
-    lat: {type: String, required: true, maxlength: COORD_MAX_LENGTH},
-    lng: {type: String, required: true, maxlength: COORD_MAX_LENGTH}
-  },
+  coord: [Number],
   ip: {type: String, required: true}
 });
 
 // Create Indexes
-donorSchema.index({hash: 1, 'blood.type': 1, 'blood.rh': 1, address: 1, 'coord.lat': 1, 'coord.lng': 1});
+donorSchema.index({hash: 1, 'blood.type': 1, 'blood.rh': 1, address: 1, coord: '2d'});
 
 // Expose methods
 donorSchema.methods.generateHash = generateHash;

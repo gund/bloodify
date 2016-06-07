@@ -11,11 +11,11 @@ export const createDonor = () => {
   return {
     firstName: 'Foo',
     lastName: 'Bar',
-    number: '+11222333344',
+    number: '+112223333444',
     email: 'test@test.com',
     blood: {type: 'O', rh: '-'},
     address: 'Foo St.',
-    coord: {lat: '12.345678', lng: '12.3456789'},
+    coord: [12.345678, 12.3456789],
     ip: '0.0.0.0'
   };
 };
@@ -28,9 +28,9 @@ export const compareDonors = (donor1, donor2) => {
   donor1.blood.type.should.equal(donor2.blood.type);
   donor1.blood.rh.should.equal(donor2.blood.rh);
   donor1.address.should.equal(donor2.address);
-  donor1.coord.lat.should.equal(donor2.coord.lat);
-  donor1.coord.lng.should.equal(donor2.coord.lng);
-  donor1.ip.should.equal(donor2.ip);
+  donor1.coord[0].should.equal(donor2.coord[0]);
+  donor1.coord[1].should.equal(donor2.coord[1]);
+  // donor1.ip.should.equal(donor2.ip); This will be overridden during saving
 };
 
 export const invalidateDonorProp = (donorToken, prop, invalidVal, testProp) => {

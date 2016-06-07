@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { RouteParams } from '@angular/router-deprecated';
 import { Location } from '@angular/common';
 
-import { Coords, Donor } from './donor.store';
+import { Donor } from './donor.store';
 import { DonorService } from './donor.service';
 import { NewDonorComponent } from './new-donor.component';
 
@@ -20,7 +20,7 @@ import { NewDonorComponent } from './new-donor.component';
 
 export class EditDonorComponent implements OnInit {
   showNewDonorPopup = new BehaviorSubject(false);
-  coords: Coords;
+  coords: number[];
   address: string;
   donor = new BehaviorSubject(null);
   hash: string;

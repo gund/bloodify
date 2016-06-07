@@ -11,7 +11,7 @@ export interface Donor {
   hash?: string;
   blood: Blood;
   address: string;
-  coord: Coords;
+  coord: number[];
   ip: string;
 }
 
@@ -23,18 +23,13 @@ export interface Blood {
 export type BloodType = 'O' | 'A' | 'B' | 'AB';
 export type BloodRh = '+' | '-';
 
-export interface Coords {
-  lat: string;
-  lng: string;
-}
-
-export const createDonor = (coord?: Coords): Donor => ({
+export const createDonor = (coord?: number[]): Donor => ({
   firstName: '',
   lastName: '',
   number: null,
   email: '',
   blood: {type: 'O', rh: '+'},
   address: '',
-  coord: coord || {lat: '', lng: ''},
+  coord: coord || [0, 0],
   ip: ''
 });

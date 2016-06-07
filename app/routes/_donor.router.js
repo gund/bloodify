@@ -74,4 +74,37 @@ export default (app, router) => {
   // Get donor by hash @ GET API_PATH/donor/link/:hash
     .get((req, res) => Donor.findOne({hash: req.params['hash']}, (err, donor) => res.json(donor)));
 
+  router.route('/donor/lng1/:lng1/lat1/:lat1/lng2/:lng2/lat2/:lat2/lng3/:lng3/lat3/:lat3/lng4/:lng4/lat4/:lat4')
+
+    .get((req, res, next) => {
+      let lng1 = parseFloat(req.params['lng1']),
+        lat1 = parseFloat(req.params['lat1']),
+        lng2 = parseFloat(req.params['lng2']),
+        lat2 = parseFloat(req.params['lat2']),
+        lng3 = parseFloat(req.params['lng3']),
+        lat3 = parseFloat(req.params['lat3']),
+        lng4 = parseFloat(req.params['lng4']),
+        lat4 = parseFloat(req.params['lat4']);
+
+      Donor.find({
+        coord: {
+          $geoWithin: {
+            $geometry: {
+              type: "Polygon",
+			  coordinates: [[
+				[lat1, lat1],
+				[lat2, lat2],
+				[lat3, lat3],
+				[lat4, lat4],
+				[lat1, lat1]
+              ]]
+            }
+          }
+        }
+      }, (err, donors) => {
+        if (err) return next(err);
+        res.json(donors);
+      });
+    });
+
 };

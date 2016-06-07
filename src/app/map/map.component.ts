@@ -23,6 +23,7 @@ export class MapComponent<Pins> implements AfterViewInit {
   @Output() pinSelected = new EventEmitter<Pins>();
   @Output() positionChanged: EventEmitter<__esri.Extent>;
   @Output() clicked: EventEmitter<any>;
+  @Output() viewInit: EventEmitter<any>;
 
   mapId: string;
 
@@ -32,6 +33,7 @@ export class MapComponent<Pins> implements AfterViewInit {
     // Transfer events from map service to outputs
     this.clicked = this.mapService.click;
     this.positionChanged = this.mapService.positionChange;
+    this.viewInit = this.mapService.viewInit;
   }
 
   ngAfterViewInit(): any {
